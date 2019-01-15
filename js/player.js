@@ -35,8 +35,7 @@ document.getElementById('play').addEventListener('click', () => {
 
 playSample.addEventListener('click', () => {
   loadSound("media/sample.mp3").then(buff => playSound(buff));
-  playerInit.removeChild(playSample);
-  playerInit.removeChild(dropArea);
+  displayVisualizer();
 });
 
 document.getElementById('pause').addEventListener('click', () => {

@@ -2,7 +2,7 @@
   dropArea.addEventListener(eventName, preventDefaults, false)
 })
 
-function preventDefaults (e) {
+function preventDefaults(e) {
   e.preventDefault()
   e.stopPropagation()
 }
@@ -26,26 +26,15 @@ function unhighlight(e) {
 dropArea.addEventListener('drop', handleDrop, false)
 
 function handleDrop(e) {
-    playerInit.removeChild(playSample);
-  playerInit.removeChild(dropArea);
   let dt = e.dataTransfer
-  let files = dt.files
-
-  handleFiles(files)
-}
-
-function handleFiles(files) {
-  ([...files]).forEach(uploadFile)
-}
-
-function uploadFile(file) {
-  var reader = new FileReader();
+  let file = dt.files[0]
+  let reader = new FileReader();
   reader.readAsArrayBuffer(file)
 
-  reader.onload = function(){
+  reader.onload = function () {
     context.decodeAudioData(reader.result, (buffer) => {
       playSound(buffer);
-  }, onError);
+      displayVisualizer();
+    }, onError);
   };
-
 }
