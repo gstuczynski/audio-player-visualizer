@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="player-init">
+      <div id="drop-area">
+        <form class="my-form">
+          <p>Drag & Drop your file!</p>
+          <input type="file" id="fileElem" multiple onchange="uploadFile(this.files)">
+        </form>
+      </div>
+      <button id="play-sample">play sample</button>
+    </div>
+    <button id="play">play</button>
+    <button id="pause">pause</button>
+    <canvas id="canvas" width="300" height="200" style="border:1px solid #d3d3d3;">
+    <script src="js/player.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/droper.js"></script>
+  </body>
+</html>
