@@ -1,4 +1,5 @@
 const context = new(AudioContext || webkitAudioContext);
+let isPlaying = false;
 
 let sourceNode;
 sourceNode = context.createBufferSource();
@@ -17,6 +18,7 @@ const loadSound = (url) => {
 
 const playSound = (buffer) => {
   context.resume()
+  isPlaying = true;
 
   sourceNode.buffer = buffer;
   if (sourceNode.start) {
@@ -28,18 +30,23 @@ function onError(e) {
   console.log(e);
 }
 
-document.getElementById('play').addEventListener('click', () => {
-  context.resume()
-});
+const playerBtn = document.getElementById('playerBtn');
 
+playerBtn.addEventListener('click', () => {
+  if(isPlaying){
+    console.log(playerBtn.childNodes[0])
+    context.suspend()
+    playerBtn.firstChild.className = 'glyphicon glyphicon-play';
+  }else {
+    context.resume()
+    playerBtn.firstChild.className = 'glyphicon glyphicon-pause';
+  }
+  isPlaying = !isPlaying;
+});
 
 playSample.addEventListener('click', () => {
   loadSound("media/sample.mp3").then(buff => playSound(buff));
   displayVisualizer();
-});
-
-document.getElementById('pause').addEventListener('click', () => {
-  context.suspend()
 });
 
 window.onload = () => {
