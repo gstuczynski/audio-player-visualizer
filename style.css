@@ -40,13 +40,31 @@ canvas {
 #drop-area {
   border: 2px dashed #ccc;
   border-radius: 20px;
-  width: 480px;
+  width: 400px;
+  height: 400px;
   font-family: sans-serif;
-  margin: 100px auto;
+  margin: auto;
   padding: 20px;
+  text-align: center;
 }
+
+#drop-area p {
+  margin: 50% auto;
+  font-size: 25px
+}
+
 #drop-area.highlight {
   border-color: purple;
+}
+
+#sample-wrapper {
+  margin: 10px auto;
+  text-align: center;
+  font-size: 28px
+}
+
+#play-sample {
+  font-size: 30px
 }
 
 #fileElem {

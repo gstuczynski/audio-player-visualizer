@@ -1,0 +1,40 @@
+{
+  "name": "html-audio-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "n",
+  "dependencies": {
+    "browser-sync-webpack-plugin": "^2.2.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.0.5",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.26.3",
+    "eslint": "^5.12.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack-dev-server --watch --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gstuczynski/audio-player-visualizer.git"
+  },
+  "author": "Grzegorz Stuczyński",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gstuczynski/audio-player-visualizer/issues"
+  },
+  "homepage": "https://github.com/gstuczynski/audio-player-visualizer#readme"
+}
