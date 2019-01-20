@@ -1,4 +1,5 @@
 import { visualization, getMouseRelPos } from './visualizer'
+import './style.css'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioCtx = window.audioCtx = new AudioContext()
@@ -45,7 +46,7 @@ const playSound = (buffer) => {
 }
 
 playSampleBtn.addEventListener('click', () => {
-  loadSound('media/sample.mp3').then(buff => playSound(buff))
+  loadSound('./media/sample.mp3').then(buff => playSound(buff))
 })
 
 const loadSound = (url) => {
@@ -103,9 +104,14 @@ function preventDefaults (e) {
 dropArea.addEventListener('drop', handleDrop, false)
 
 function handleDrop (e) {
-  isLoading(true)
   let dt = e.dataTransfer
   let file = dt.files[0]
+  if (file.type !== 'audio/mp3') {
+    alert(`${file.type} i not supported, plese put mp3 file`)
+    return
+  }
+  isLoading(true)
+
   let reader = new FileReader()
   reader.readAsArrayBuffer(file)
 
