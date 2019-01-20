@@ -1,16 +1,39 @@
-import { Visualization } from './visualizer'
+import { visualization, getMouseRelPos } from './visualizer'
 
-const context = new (AudioContext || webkitAudioContext)()
+const AudioContext = window.AudioContext || window.webkitAudioContext
+const audioCtx = window.audioCtx = new AudioContext()
 
-let sourceNode = context.createBufferSource()
-sourceNode.connect(context.destination)
+let mousePos = { x: 0, y: 0 }
+
+const posX = window.innerWidth / 2
+const posY = window.innerHeight / 2
+const posZ = 300
+
+const panner = new PannerNode(audioCtx, {
+  panningModel: 'HRTF',
+  distanceModel: 'linear',
+  positionX: posX,
+  positionY: posY,
+  positionZ: posZ,
+  orientationX: 0.0,
+  orientationY: 0.0,
+  orientationZ: -1.0,
+  refDistance: 1,
+  maxDistance: 5000,
+  rolloffFactor: 10,
+  coneInnerAngle: 40,
+  coneOuterAngle: 50,
+  coneOuterGain: 0.4
+})
+
+let sourceNode = audioCtx.createBufferSource()
 let isPlaying = false
 
 const dropArea = document.getElementById('drop-area')
 const playSampleBtn = document.getElementById('play-sample')
 
 const playSound = (buffer) => {
-  context.resume()
+  audioCtx.resume()
   sourceNode.buffer = buffer
   if (sourceNode.start) {
     sourceNode.start()
@@ -27,28 +50,32 @@ playSampleBtn.addEventListener('click', () => {
 const loadSound = (url) => {
   return fetch(url)
     .then((res) => res.arrayBuffer())
-    .then(res => context.decodeAudioData(res))
+    .then(res => audioCtx.decodeAudioData(res))
     .then(buff => buff)
 }
 
 function setupAudioNodes () {
-  let javascriptNode = context.createScriptProcessor(2048, 1, 1)
-  javascriptNode.connect(context.destination)
+  let javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1)
+  javascriptNode.connect(audioCtx.destination)
 
-  let analyser = context.createAnalyser()
+  let analyser = audioCtx.createAnalyser()
   analyser.smoothingTimeConstant = 0.3
   analyser.fftSize = 1024
 
-  let splitter = context.createChannelSplitter()
+  let splitter = audioCtx.createChannelSplitter()
   sourceNode.connect(splitter)
   splitter.connect(analyser, 0, 0)
   analyser.connect(javascriptNode)
-  sourceNode.connect(context.destination)
+
+  sourceNode.connect(panner).connect(audioCtx.destination)
 
   javascriptNode.onaudioprocess = () => {
-    var freqArr = new Uint8Array(analyser.frequencyBinCount)
+    let freqArr = new Uint8Array(analyser.frequencyBinCount)
     analyser.getByteFrequencyData(freqArr)
-    Visualization(freqArr)
+    visualization(freqArr)
+    mousePos = getMouseRelPos()
+    panner.positionX.value = mousePos.x * 5
+    panner.positionY.value = mousePos.y
   }
 }
 
@@ -79,7 +106,7 @@ function handleDrop (e) {
   reader.readAsArrayBuffer(file)
 
   reader.onload = function () {
-    context.decodeAudioData(reader.result)
+    audioCtx.decodeAudioData(reader.result)
       .then(buffer => playSound(buffer))
       .catch(err => console.log(err))
   }
@@ -96,10 +123,10 @@ function setAudioController () {
 
   playerBtn.addEventListener('click', () => {
     if (isPlaying) {
-      context.suspend()
+      audioCtx.suspend()
       playerBtn.firstChild.className = 'glyphicon glyphicon-play'
     } else {
-      context.resume()
+      audioCtx.resume()
       playerBtn.firstChild.className = 'glyphicon glyphicon-pause'
     }
     isPlaying = !isPlaying

@@ -2,11 +2,8 @@ const canvas = document.querySelector('canvas')
 const canvasCtx = canvas.getContext('2d')
 
 let centrX, centrY, endX, endY, barHeight, rads, x, y
-
-const bars = 200
-
-const barWidth = 5
-
+const bars = 100
+const barWidth = 10
 const radius = 100
 
 let mousePos = {
@@ -17,7 +14,7 @@ let mousePos = {
 let width = window.innerWidth
 let height = window.innerHeight
 
-function Visualization (freqArr) {
+function visualization (freqArr) {
   _CanvasSetup()
   centrX = width / 2
   centrY = height / 2
@@ -50,10 +47,12 @@ function _CanvasSetup () {
     mousePos.x = evt.clientX
     mousePos.y = evt.clientY
   })
+
+  document.getElementById('info').classList.remove('novisible')
 }
 
 function drawBar (x1, y1, x2, y2, width, frequency) {
-  var lineColor = `rgb(${mousePos.x / 5},${mousePos.y / 5},${frequency})`
+  const lineColor = `rgb(${mousePos.x / 5},${mousePos.y / 5},${frequency})`
 
   canvasCtx.strokeStyle = lineColor
   canvasCtx.lineWidth = width
@@ -63,4 +62,11 @@ function drawBar (x1, y1, x2, y2, width, frequency) {
   canvasCtx.stroke()
 }
 
-export { Visualization }
+function getMouseRelPos () {
+  return {
+    x: mousePos.x - width / 2,
+    y: mousePos.y
+  }
+}
+
+export { visualization, getMouseRelPos }

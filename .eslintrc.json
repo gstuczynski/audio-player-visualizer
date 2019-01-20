@@ -2,8 +2,5 @@
     "extends": "standard",
     "env": {
         "browser": true
-      },
-    "globals": {
-        "webkitAudioContext": true
-    }
+      }
 }
