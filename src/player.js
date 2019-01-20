@@ -41,6 +41,7 @@ const playSound = (buffer) => {
   setAudioController()
   setupAudioNodes()
   isPlaying = true
+  isLoading(false)
 }
 
 playSampleBtn.addEventListener('click', () => {
@@ -48,6 +49,7 @@ playSampleBtn.addEventListener('click', () => {
 })
 
 const loadSound = (url) => {
+  isLoading(true)
   return fetch(url)
     .then((res) => res.arrayBuffer())
     .then(res => audioCtx.decodeAudioData(res))
@@ -68,6 +70,7 @@ function setupAudioNodes () {
   analyser.connect(javascriptNode)
 
   sourceNode.connect(panner).connect(audioCtx.destination)
+  sourceNode.loop = true
 
   javascriptNode.onaudioprocess = () => {
     let freqArr = new Uint8Array(analyser.frequencyBinCount)
@@ -100,6 +103,7 @@ function preventDefaults (e) {
 dropArea.addEventListener('drop', handleDrop, false)
 
 function handleDrop (e) {
+  isLoading(true)
   let dt = e.dataTransfer
   let file = dt.files[0]
   let reader = new FileReader()
@@ -113,11 +117,6 @@ function handleDrop (e) {
 }
 
 function setAudioController () {
-  const playerInit = document.getElementById('player-init')
-
-  playerInit.removeChild(document.getElementById('sample-wrapper'))
-  playerInit.removeChild(dropArea)
-
   document.getElementById('controller').className = 'controller'
   const playerBtn = document.getElementById('playerBtn')
 
@@ -131,4 +130,16 @@ function setAudioController () {
     }
     isPlaying = !isPlaying
   })
+}
+
+function isLoading (isLoading) {
+  const spinner = document.getElementById('spinner')
+  if (isLoading) {
+    const playerInit = document.getElementById('player-init')
+    playerInit.removeChild(document.getElementById('sample-wrapper'))
+    playerInit.removeChild(dropArea)
+    spinner.className = 'spinner'
+  } else {
+    spinner.className = 'novisible'
+  }
 }

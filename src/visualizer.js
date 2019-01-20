@@ -1,21 +1,18 @@
 const canvas = document.querySelector('canvas')
 const canvasCtx = canvas.getContext('2d')
 
-let centrX, centrY, endX, endY, barHeight, rads, x, y
-const bars = 100
-const barWidth = 10
-const radius = 100
+let centrX, centrY, endX, endY, barHeight, rads, x, y, bars, barWidth, radius, barHeightMultipler
+let width = window.innerWidth
+let height = window.innerHeight
 
 let mousePos = {
   x: 0,
   y: 0
 }
 
-let width = window.innerWidth
-let height = window.innerHeight
-
 function visualization (freqArr) {
-  _CanvasSetup()
+  _setInitlials()
+  _canvasSetup()
   centrX = width / 2
   centrY = height / 2
   canvasCtx.clearRect(0, 0, canvas.width, canvas.height)
@@ -23,7 +20,7 @@ function visualization (freqArr) {
   canvasCtx.stroke()
   for (let i = 0; i < bars; i++) {
     rads = Math.PI * 2 / bars
-    barHeight = freqArr[i] * 1.5
+    barHeight = freqArr[i] * barHeightMultipler
     x = centrX + Math.cos(rads * i) * (radius)
     y = centrY + Math.sin(rads * i) * (radius)
     endX = centrX + Math.cos(rads * i) * (radius + barHeight)
@@ -32,15 +29,12 @@ function visualization (freqArr) {
   }
 }
 
-function _CanvasSetup () {
+function _canvasSetup () {
   canvas.width = width
   canvas.height = height
 
   window.addEventListener('resize', () => {
-    width = window.innerWidth
-    height = window.innerHeight
-    canvas.width = width
-    canvas.height = height
+    _setInitlials()
   })
 
   canvas.addEventListener('mousemove', (evt) => {
@@ -66,6 +60,24 @@ function getMouseRelPos () {
   return {
     x: mousePos.x - width / 2,
     y: mousePos.y
+  }
+}
+
+function _setInitlials () {
+  width = window.innerWidth
+  height = window.innerHeight
+  canvas.width = width
+  canvas.height = height
+  if (width < 500) {
+    bars = 50
+    barWidth = 5
+    radius = 20
+    barHeightMultipler = 0.5
+  } else {
+    bars = 100
+    barWidth = 10
+    radius = 100
+    barHeightMultipler = 1.5
   }
 }
 

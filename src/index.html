@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -12,6 +13,7 @@
 </head>
 
 <body>
+  <div id="spinner" class="novisible"></div>
   <div id="player-init">
     <div id="drop-area">
       <form>
@@ -27,7 +29,7 @@
   <div id="controller" class="controllerInv">
     <button id="playerBtn" type="button" class="btn btn-default btn-sm"><span id="playerIcon" class="glyphicon glyphicon-pause"></span></button>
   </div>
-  <p id="info" class="novisible">Move your mouse to change the position of audio source signal, and visualizer colors. Put your headphones of for better experience.</p>
+  <p id="info" class="novisible">Move mouse to change the position of audio source signal, and visualizer colors. Put your headphones of for better experience.</p>
   <canvas width="0" height="0" >
 </body>
 

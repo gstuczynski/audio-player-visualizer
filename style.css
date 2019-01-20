@@ -8,7 +8,7 @@ html, body {
 }
 
 canvas {
-  background: linear-gradient(-45deg, #1e130c, #9a8478, #485563, #29323c);
+  background: linear-gradient(-45deg, #f46b45, #eea849, #8E0E00, #1F1C18);
   background-size: 400% 400%;
   animation: Gradient 15s ease infinite;
 }
@@ -26,8 +26,13 @@ canvas {
   padding: 0;
 }
 
-.controller button {
+.controller button,
+.controller button:active,
+.controller button:hover, 
+.controller button:focus {
   padding: 0;
+  background: none;
+  border: none;
 }
 
 #playerIcon {
@@ -75,10 +80,36 @@ canvas {
   position: fixed;
   top: 0;
   font-size: 20px;
+  max-width: 500px;
+  left: calc(50% - 250px)  
 }
 
 .novisible {
   display: none;
+}
+
+.spinner {
+  display: flex;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  flex-flow: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.spinner:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 6px;
+  box-sizing: border-box;
+  border: 26px solid green;
+  border-color: green transparent green transparent;
+  animation: spinner 1.2s infinite;
 }
 
 @keyframes Gradient {
@@ -92,3 +123,39 @@ canvas {
 		background-position: 0% 50%
 	}
 }
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #drop-area {
+    display: none;
+  }
+
+  #sample-wrapper p{
+    display: none;
+  }
+
+  .controller {
+    top: calc(50vh - 20px);
+    left: calc(50vw - 20px);
+    width: 30px;
+    height: 30px;
+  }
+
+  #info {
+    display: none
+  }
+}
+
