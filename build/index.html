@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <div id="spinner" class="novisible"></div>
+  <div id="player-init">
+    <div id="drop-area">
+      <form>
+        <p>Drop your file here!</p>
+        <input type="file" id="fileElem">
+      </form>
+    </div>
+    <div id="sample-wrapper">	
+    	<p>OR</p>
+    	<button id="play-sample" class="btn btn-success">Play sample</button>
+    </div>
+  </div>
+  <div id="controller" class="controllerInv">
+    <button id="playerBtn" type="button" class="btn btn-default btn-sm"><span id="playerIcon" class="glyphicon glyphicon-pause"></span></button>
+  </div>
+  <p id="info" class="novisible">Move mouse to change the position of audio source signal, and visualizer colors. Put your headphones of for better experience.</p>
+  <canvas width="0" height="0" >
+<script type="text/javascript" src="player.bundle.js"></script></body>
+
+</html>
