@@ -52,9 +52,8 @@ playSampleBtn.addEventListener('click', () => {
 const loadSound = (url) => {
   isLoading(true)
   return fetch(url)
-    .then((res) => res.arrayBuffer())
+    .then(res => res.arrayBuffer())
     .then(res => audioCtx.decodeAudioData(res))
-    .then(buff => buff)
 }
 
 function setupAudioNodes () {
